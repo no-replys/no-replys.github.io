@@ -1,176 +1,39 @@
-<!-- simple-whatsapp-how-you-doing.html
-A single-file HTML/CSS/JS "mini web app" that looks like a tiny WhatsApp chat and shows
-an automated "How you doing?" message. Save as .html and open in your browser.
--->
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mini WhatsApp — "How you doing?"</title>
-  <style>
-    :root{
-      --whatsapp-green:#25D366;
-      --bubble-in:#dcf8c6;
-      --bubble-out:#ffffff;
-      --bg:#ece5dd;
-      --muted:#6b6b6b;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      background:var(--bg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
-    .app{
-      width:360px;
-      max-width:calc(100% - 48px);
-      height:640px;
-      background:#fff;
-      border-radius:12px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.12);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-    }
-
-    /* header */
-    .header{
-      background:linear-gradient(90deg,var(--whatsapp-green),#20b85a);
-      color:#fff;
-      padding:14px 16px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .avatar{
-      width:44px;height:44px;border-radius:50%;background:#fff2;border:4px solid rgba(255,255,255,0.18);
-      display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;
-      box-shadow:0 2px 6px rgba(0,0,0,0.12);
-    }
-    .title{font-weight:700}
-    .subtitle{font-size:12px;opacity:0.95}
-
-    /* messages */
-    .messages{
-      flex:1;padding:18px;overflow:auto;background:linear-gradient(#ece5dd, #f7f7f7 60%);
-      display:flex;flex-direction:column;gap:10px;
-    }
-    .bubble{
-      max-width:78%;padding:10px 12px;border-radius:12px;line-height:1.2;font-size:14px;
-      box-shadow:0 1px 0 rgba(0,0,0,0.04);
-    }
-    .in{align-self:flex-start;background:var(--bubble-in);border-bottom-left-radius:4px;}
-    .out{align-self:flex-end;background:var(--bubble-out);border-bottom-right-radius:4px;}
-    .meta{font-size:11px;color:var(--muted);margin-top:6px}
-
-    /* input area */
-    .composer{
-      padding:12px;display:flex;gap:8px;align-items:center;border-top:1px solid rgba(0,0,0,0.05);
-      background:linear-gradient(#fff,#fbfbfb);
-    }
-    .input{
-      flex:1;background:#fff;border:1px solid #e6e6e6;padding:10px 12px;border-radius:22px;outline:none;
-      font-size:14px;box-shadow:0 1px 0 rgba(0,0,0,0.02) inset;
-    }
-    .btn{
-      background:var(--whatsapp-green);border:none;color:#fff;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer;
-      display:inline-flex;align-items:center;gap:8px;
-    }
-    .btn:active{transform:translateY(1px)}
-
-    .small{font-size:12px;color:var(--muted)}
-
-    /* helper */
-    .centered{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;color:var(--muted)}
-
-    /* scroll behavior */
-    .messages::-webkit-scrollbar{width:8px}
-    .messages::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.08);border-radius:6px}
-
-    @media (max-width:420px){.app{height:80vh}}
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uth is coming...</title>
+    <style>
+        body {
+            margin: 0;
+            background: #f4e4c1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="app" role="application" aria-label="Mini WhatsApp chat">
-    <header class="header">
-      <div class="avatar">W</div>
-      <div>
-        <div class="title">WhatsApp Mini</div>
-        <div class="subtitle">Simple demo • Auto message</div>
-      </div>
-    </header>
 
-    <main class="messages" id="messages" aria-live="polite">
-      <!-- initial incoming message -->
-      <div class="bubble in" id="incoming">How you doing?</div>
-      <div class="meta">Received • just now</div>
+    <h1>Uth is coming...</h1>
 
-      <div class="centered small">Tip: type a reply and press Send</div>
-    </main>
+    <!-- Inserted your camel image -->
+    <img src="uth.png" alt="Camel in desert">
 
-    <form class="composer" id="composer" onsubmit="return false;" aria-label="Send message">
-      <input id="input" class="input" placeholder="Type a reply..." aria-label="Message input" />
-      <button id="sendBtn" class="btn" type="submit">Send</button>
-    </form>
-  </div>
-
-  <script>
-    // Simple behaviour: send user's message to the messages area.
-    const input = document.getElementById('input');
-    const messages = document.getElementById('messages');
-    const sendBtn = document.getElementById('sendBtn');
-
-    function makeBubble(text, cls){
-      const b = document.createElement('div');
-      b.className = 'bubble ' + cls;
-      b.textContent = text;
-      return b;
-    }
-
-    function appendOutgoing(text){
-      const bubble = makeBubble(text, 'out');
-      messages.appendChild(bubble);
-      const meta = document.createElement('div');
-      meta.className = 'meta';
-      meta.textContent = 'Sent • just now';
-      messages.appendChild(meta);
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    sendBtn.addEventListener('click', ()=>{
-      const v = input.value.trim();
-      if(!v) return;
-      appendOutgoing(v);
-      input.value = '';
-
-      // simple auto-reply after a short pause
-      setTimeout(()=>{
-        const reply = makeBubble('Nice — thanks for replying!', 'in');
-        messages.appendChild(reply);
-        const meta = document.createElement('div');
-        meta.className = 'meta';
-        meta.textContent = 'Received • just now';
-        messages.appendChild(meta);
-        messages.scrollTop = messages.scrollHeight;
-      },700);
-    });
-
-    // allow Enter to send
-    input.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        sendBtn.click();
-      }
-    });
-
-    // auto-scroll to bottom on load
-    window.addEventListener('load', ()=>{messages.scrollTop = messages.scrollHeight});
-  </script>
 </body>
 </html>
